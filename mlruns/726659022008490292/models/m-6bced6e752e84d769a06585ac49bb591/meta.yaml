@@ -1,0 +1,10 @@
+artifact_location: file:///home/sahu_tanmay2104/iris_pipeline/mlruns/726659022008490292/models/m-6bced6e752e84d769a06585ac49bb591/artifacts
+creation_timestamp: 1761843134237
+experiment_id: '726659022008490292'
+last_updated_timestamp: 1761843137041
+model_id: m-6bced6e752e84d769a06585ac49bb591
+model_type: null
+name: DecisionTree
+source_run_id: 7f0958f16ad345419fc940eeec19d684
+status: 2
+status_message: null

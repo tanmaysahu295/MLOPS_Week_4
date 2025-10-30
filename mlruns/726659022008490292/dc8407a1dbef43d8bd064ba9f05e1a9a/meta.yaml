@@ -1,0 +1,14 @@
+artifact_uri: file:///home/sahu_tanmay2104/iris_pipeline/mlruns/726659022008490292/dc8407a1dbef43d8bd064ba9f05e1a9a/artifacts
+end_time: 1761842556929
+entry_point_name: ''
+experiment_id: '726659022008490292'
+lifecycle_stage: active
+run_id: dc8407a1dbef43d8bd064ba9f05e1a9a
+run_name: 'DecisionTree_{''max_depth'': 3}'
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761842554054
+status: 3
+tags: []
+user_id: sahu_tanmay2104

@@ -1,0 +1,10 @@
+artifact_location: file:///home/sahu_tanmay2104/iris_pipeline/mlruns/726659022008490292/models/m-a2449620fc164d79afd998ef9cd934ec/artifacts
+creation_timestamp: 1761843157592
+experiment_id: '726659022008490292'
+last_updated_timestamp: 1761843160343
+model_id: m-a2449620fc164d79afd998ef9cd934ec
+model_type: null
+name: LogisticRegression
+source_run_id: 74d36c5170f442438e62d7755fca6f5b
+status: 2
+status_message: null

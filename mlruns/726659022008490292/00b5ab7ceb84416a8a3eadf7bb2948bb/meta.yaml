@@ -1,0 +1,14 @@
+artifact_uri: file:///home/sahu_tanmay2104/iris_pipeline/mlruns/726659022008490292/00b5ab7ceb84416a8a3eadf7bb2948bb/artifacts
+end_time: 1761847205723
+entry_point_name: ''
+experiment_id: '726659022008490292'
+lifecycle_stage: active
+run_id: 00b5ab7ceb84416a8a3eadf7bb2948bb
+run_name: 'RandomForest_{''n_estimators'': 100, ''max_depth'': 5}'
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761847202731
+status: 3
+tags: []
+user_id: sahu_tanmay2104

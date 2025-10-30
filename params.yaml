@@ -1,0 +1,15 @@
+data_load:
+  data_path: /home/sahu_tanmay2104/iris_pipeline/data/data_iris/iris.csv
+
+split:
+  test_size: 0.4
+  random_state: 42
+
+train:
+  max_depth: 3
+  random_state: 1
+  model_output_path: /home/sahu_tanmay2104/iris_pipeline/data/artifacts/model_1.joblib
+  model_name: IrisBestModel
+  experiment_name: Iris_MultiModel_Training
+  tracking_uri: file:///home/sahu_tanmay2104/iris_pipeline/mlruns
+  storage_location: file:///home/sahu_tanmay2104/iris_pipeline/mlruns/726659022008490292/models/m-6bced6e752e84d769a06585ac49bb591/artifacts

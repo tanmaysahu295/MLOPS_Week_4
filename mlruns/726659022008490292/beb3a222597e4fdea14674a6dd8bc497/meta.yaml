@@ -1,0 +1,14 @@
+artifact_uri: file:///home/sahu_tanmay2104/iris_pipeline/mlruns/726659022008490292/beb3a222597e4fdea14674a6dd8bc497/artifacts
+end_time: 1761842583038
+entry_point_name: ''
+experiment_id: '726659022008490292'
+lifecycle_stage: active
+run_id: beb3a222597e4fdea14674a6dd8bc497
+run_name: 'LogisticRegression_{''C'': 10.0, ''max_iter'': 200}'
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761842580221
+status: 3
+tags: []
+user_id: sahu_tanmay2104

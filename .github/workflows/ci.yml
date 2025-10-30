@@ -1,0 +1,53 @@
+name: CI - Iris Pipeline
+
+on:
+  push:
+    branches: [ "main", "dev", "master" ]
+  pull_request:
+    branches: [ "main", "dev", "master" ]
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install dvc[gs] mlflow joblib numpy scikit-learn
+
+    - name: Pull data (if DVC remote exists)
+      run: |
+        if [ -f ".dvc/config" ]; then
+          dvc pull || echo "No DVC remote configured yet"
+        fi
+
+    - name: Run DVC pipeline
+      run: |
+        dvc repro
+
+    - name: Check sanity log
+      run: |
+        if [ -f "logs/sanity_check.log" ]; then
+          echo "✅ Sanity check passed!"
+          cat logs/sanity_check.log
+        else
+          echo "❌ Sanity check log missing!"
+          exit 1
+        fi
+
+    - name: Push DVC artifacts (optional)
+      if: github.ref == 'refs/heads/main'
+      run: |
+        if [ -f ".dvc/config" ]; then
+          dvc push || echo "No DVC remote configured yet"
+        fi
