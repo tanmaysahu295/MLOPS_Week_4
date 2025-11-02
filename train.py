@@ -20,9 +20,10 @@ warnings.filterwarnings("ignore")
 # CONFIGURATION
 # ----------------------------
 DATA_PATH = "data/iris.csv"
-MODEL_OUTPUT_PATH = "data/artifacts/model_1.joblib"
+MODEL_OUTPUT_PATH = "artifacts/model_1.joblib"
 
 # ✅ Use relative, environment-agnostic MLflow setup (works on local + CI/CD)
+os.environ["HOME"] = os.getcwd()
 os.environ["MLFLOW_TRACKING_URI"] = "file:./mlruns"
 os.environ["MLFLOW_ARTIFACT_ROOT"] = os.path.join(os.getcwd(), "mlartifacts")
 
@@ -33,6 +34,7 @@ EXPERIMENT_NAME = "Iris_MultiModel_Training"
 REGISTERED_MODEL_NAME = "IrisBestModel"
 
 mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+mlflow.set_registry_uri("file:./mlruns")
 mlflow.set_experiment(EXPERIMENT_NAME)
 
 
