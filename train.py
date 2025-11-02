@@ -25,7 +25,7 @@ MODEL_OUTPUT_PATH = "artifacts/model_1.joblib"
 # ✅ Use relative, environment-agnostic MLflow setup (works on local + CI/CD)
 os.environ["HOME"] = os.getcwd()
 os.environ["MLFLOW_TRACKING_URI"] = "file:./mlruns"
-os.environ["MLFLOW_ARTIFACT_ROOT"] = os.path.join(os.getcwd(), "mlartifacts")
+os.environ["MLFLOW_ARTIFACT_ROOT"] = os.path.join(os.getcwd(), "artifacts")
 
 os.makedirs(os.environ["MLFLOW_ARTIFACT_ROOT"], exist_ok=True)
 

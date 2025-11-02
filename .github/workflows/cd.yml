@@ -44,7 +44,7 @@ jobs:
         run: |
           export HOME=$PWD         
           export MLFLOW_TRACKING_URI="file:./mlruns"
-          export MLFLOW_ARTIFACT_ROOT="$PWD/mlartifacts"
+          export MLFLOW_ARTIFACT_ROOT="$PWD/artifacts"
           mkdir -p $MLFLOW_ARTIFACT_ROOT
           python train.py
 
