@@ -3,7 +3,7 @@ stages:
     cmd: python3 train.py
     deps:
       - train.py
-      - data/data_iris/iris.csv
+      - data/iris.csv
       - params.yaml
     params:
       - split.test_size
@@ -16,12 +16,12 @@ stages:
       - train.tracking_uri
       - train.storage_location
     outs:
-      - data/artifacts/model_1.joblib
+      - artifacts/model_1.joblib
 
   test:
     cmd: python3 test.py
     deps:
       - test.py
-      - data/artifacts/model_1.joblib
+      - artifacts/model_1.joblib
     outs:
       - logs/sanity_check.log

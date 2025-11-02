@@ -1,5 +1,5 @@
 data_load:
-  data_path: data/data_iris/iris.csv
+  data_path: data_iris/iris.csv
 
 split:
   test_size: 0.4
@@ -8,7 +8,7 @@ split:
 train:
   max_depth: 3
   random_state: 1
-  model_output_path: data/artifacts/model_1.joblib
+  model_output_path: artifacts/model_1.joblib
   model_name: IrisBestModel
   experiment_name: Iris_MultiModel_Training
   tracking_uri: file:./mlruns
