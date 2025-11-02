@@ -3,7 +3,7 @@ stages:
   train:
     cmd: python3 train.py
     deps:
-    - path: data/data_iris/iris.csv
+    - path: data/iris.csv
       hash: md5
       md5: 9c22f7cf3714d0c194f5f43a6276ca9d
       size: 3861
@@ -23,20 +23,20 @@ stages:
         train.max_depth: 3
         train.model_name: IrisBestModel
         train.model_output_path: 
-          /home/sahu_tanmay2104/iris_pipeline/data/artifacts/model_1.joblib
+          artifacts/model_1.joblib
         train.random_state: 1
         train.storage_location: 
-          file:///home/sahu_tanmay2104/iris_pipeline/mlruns/726659022008490292/models/m-6bced6e752e84d769a06585ac49bb591/artifacts
-        train.tracking_uri: file:///home/sahu_tanmay2104/iris_pipeline/mlruns
+          file:.//artifacts
+        train.tracking_uri: file:.//mlruns
     outs:
-    - path: data/artifacts/model_1.joblib
+    - path: artifacts/model_1.joblib
       hash: md5
       md5: d976a41abcb44f38a86e5e1b67f82709
       size: 2577
   test:
     cmd: python3 test.py
     deps:
-    - path: data/artifacts/model_1.joblib
+    - path: artifacts/model_1.joblib
       hash: md5
       md5: d976a41abcb44f38a86e5e1b67f82709
       size: 2577
