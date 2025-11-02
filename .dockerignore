@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+*.pyc
+mlruns/
+logs/
+.dvc/
+.git/
+*.png
+*.csv
+*.ipynb
+k8s/
