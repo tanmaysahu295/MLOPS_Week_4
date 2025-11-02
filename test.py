@@ -11,7 +11,7 @@ def load_model():
     If unavailable, fall back to the locally saved model.
     """
     MODEL_NAME = "IrisBestModel"
-    LOCAL_MODEL_PATH = "/home/sahu_tanmay2104/iris_pipeline/data/artifacts/model_1.joblib"
+    LOCAL_MODEL_PATH = "/data/artifacts/model_1.joblib"
     MLFLOW_TRACKING_URI = "file:./mlruns"
 
     mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
