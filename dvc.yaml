@@ -3,7 +3,7 @@ stages:
     cmd: python3 train.py
     deps:
       - train.py
-      - /home/sahu_tanmay2104/iris_pipeline/data/data_iris/iris.csv
+      - /data/data_iris/iris.csv
       - params.yaml
     params:
       - split.test_size
@@ -16,12 +16,12 @@ stages:
       - train.tracking_uri
       - train.storage_location
     outs:
-      - /home/sahu_tanmay2104/iris_pipeline/data/artifacts/model_1.joblib
+      - data/artifacts/model_1.joblib
 
   test:
     cmd: python3 test.py
     deps:
       - test.py
-      - /home/sahu_tanmay2104/iris_pipeline/data/artifacts/model_1.joblib
+      - data/artifacts/model_1.joblib
     outs:
       - logs/sanity_check.log
