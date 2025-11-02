@@ -41,7 +41,12 @@ jobs:
 
       # 🧠 Run model training
       - name: Run model training
-        run: python train.py
+        run: |
+          export HOME=$PWD         
+          export MLFLOW_TRACKING_URI="file:./mlruns"
+          export MLFLOW_ARTIFACT_ROOT="$PWD/mlartifacts"
+          mkdir -p $MLFLOW_ARTIFACT_ROOT
+          python train.py
 
       # ✅ Check model artifact exists
       - name: Check model artifact exists
