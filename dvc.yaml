@@ -3,7 +3,7 @@ stages:
     cmd: python3 train.py
     deps:
       - train.py
-      - /data/data_iris/iris.csv
+      - data/data_iris/iris.csv
       - params.yaml
     params:
       - split.test_size
