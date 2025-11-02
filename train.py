@@ -5,7 +5,6 @@ import numpy as np
 import joblib
 import warnings
 import os
-import yaml
 import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
@@ -18,17 +17,20 @@ from mlflow.exceptions import MlflowException
 warnings.filterwarnings("ignore")
 
 # ----------------------------
-# LOAD CONFIG FROM dvc.yaml
+# CONFIGURATION
 # ----------------------------
-with open("params.yaml", "r") as f:
-    config = yaml.safe_load(f)
+DATA_PATH = "data/data_iris/iris.csv"
+MODEL_OUTPUT_PATH = "data/artifacts/model_1.joblib"
 
-DATA_PATH = config["data_load"]["data_path"]
-MODEL_OUTPUT_PATH = config["train"]["model_output_path"]
-MLFLOW_TRACKING_URI = config["train"]["tracking_uri"]
-EXPERIMENT_NAME = config["train"]["experiment_name"]
-REGISTERED_MODEL_NAME = config["train"]["model_name"]
-STORAGE_LOCATION = config["train"]["storage_location"]
+# ✅ Use relative, environment-agnostic MLflow setup (works on local + CI/CD)
+os.environ["MLFLOW_TRACKING_URI"] = "file:./mlruns"
+os.environ["MLFLOW_ARTIFACT_ROOT"] = os.path.join(os.getcwd(), "mlartifacts")
+
+os.makedirs(os.environ["MLFLOW_ARTIFACT_ROOT"], exist_ok=True)
+
+MLFLOW_TRACKING_URI = os.environ["MLFLOW_TRACKING_URI"]
+EXPERIMENT_NAME = "Iris_MultiModel_Training"
+REGISTERED_MODEL_NAME = "IrisBestModel"
 
 mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
 mlflow.set_experiment(EXPERIMENT_NAME)
@@ -36,7 +38,8 @@ mlflow.set_experiment(EXPERIMENT_NAME)
 
 def load_data(path):
     """Load dataset from CSV"""
-    return pd.read_csv(path)
+    data = pd.read_csv(path)
+    return data
 
 
 def train_and_evaluate():
@@ -76,6 +79,9 @@ def train_and_evaluate():
         },
     }
 
+    # ----------------------------
+    # TRACK BEST MODEL
+    # ----------------------------
     best_model = None
     best_score = -1
     best_model_name = ""
@@ -96,15 +102,18 @@ def train_and_evaluate():
                 mlflow.log_params(param_set)
                 mlflow.log_metric("accuracy", acc)
 
-                # Metadata tags
+                # Add metadata tags
                 mlflow.set_tag("model_name", model_name)
                 mlflow.set_tag("data_path", DATA_PATH)
+                mlflow.log_param("train_size", len(train))
+                mlflow.log_param("test_size", len(test))
 
-                # Log model
+                # ✅ Log model (without deprecated argument)
                 mlflow.sklearn.log_model(model, model_name)
 
                 print(f"Trained {model_name} with {param_set}, Accuracy={acc:.4f}")
 
+                # Track best model
                 if acc > best_score:
                     best_score = acc
                     best_model = model
@@ -120,12 +129,12 @@ def train_and_evaluate():
 
     try:
         mlflow.register_model(model_uri=model_uri, name=REGISTERED_MODEL_NAME)
-        print(f"📦 Registered '{best_model_name}' as '{REGISTERED_MODEL_NAME}' in MLflow registry.")
+        print(f"📦 Registered {best_model_name} as '{REGISTERED_MODEL_NAME}' in MLflow registry.")
     except MlflowException as e:
-        print(f"⚠️ Model registration skipped: {e}")
+        print(f"⚠ Model registration skipped: {e}")
 
     # ----------------------------
-    # CONFUSION MATRIX
+    # LOG CONFUSION MATRIX
     # ----------------------------
     ConfusionMatrixDisplay.from_estimator(best_model, X_test, y_test)
     plt.title(f"{best_model_name} Confusion Matrix")
@@ -138,12 +147,11 @@ def train_and_evaluate():
     # ----------------------------
     os.makedirs(os.path.dirname(MODEL_OUTPUT_PATH), exist_ok=True)
     joblib.dump(best_model, MODEL_OUTPUT_PATH)
-    print(f"💾 Best model saved locally at: {MODEL_OUTPUT_PATH}")
-    print(f"🧩 MLflow Artifact Store: {STORAGE_LOCATION}")
+    print(f"💾 Best model saved at: {MODEL_OUTPUT_PATH}")
 
 
 # ----------------------------
-# MAIN
+# MAIN EXECUTION
 # ----------------------------
 if __name__ == "__main__":
     train_and_evaluate()
