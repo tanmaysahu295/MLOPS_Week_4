@@ -12,4 +12,4 @@ train:
   model_name: IrisBestModel
   experiment_name: Iris_MultiModel_Training
   tracking_uri: file:./mlruns
-  storage_location: file:./mlruns/726659022008490292/models/m-6bced6e752e84d769a06585ac49bb591/artifacts
+  storage_location: file:./mlruns
