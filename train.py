@@ -19,8 +19,8 @@ warnings.filterwarnings("ignore")
 # ----------------------------
 # CONFIGURATION
 # ----------------------------
-DATA_PATH = "data/data_iris/iris.csv"
-MODEL_OUTPUT_PATH = "data/artifacts/model_1.joblib"
+DATA_PATH = "./data/iris.csv"
+MODEL_OUTPUT_PATH = "./data/artifacts/model_1.joblib"
 
 # ✅ Use relative, environment-agnostic MLflow setup (works on local + CI/CD)
 os.environ["MLFLOW_TRACKING_URI"] = "file:./mlruns"
