@@ -22,19 +22,21 @@ warnings.filterwarnings("ignore")
 DATA_PATH = "data/iris.csv"
 MODEL_OUTPUT_PATH = "artifacts/model_1.joblib"
 
-# ✅ Use relative, environment-agnostic MLflow setup (works on local + CI/CD)
+# ✅ Force MLflow to use relative, environment-agnostic paths (works in GitHub Actions too)
 os.environ["HOME"] = os.getcwd()
 os.environ["MLFLOW_TRACKING_URI"] = "file:./mlruns"
+os.environ["MLFLOW_REGISTRY_URI"] = "file:./mlruns"
 os.environ["MLFLOW_ARTIFACT_ROOT"] = os.path.join(os.getcwd(), "artifacts")
 
 os.makedirs(os.environ["MLFLOW_ARTIFACT_ROOT"], exist_ok=True)
+os.makedirs("mlruns", exist_ok=True)
 
 MLFLOW_TRACKING_URI = os.environ["MLFLOW_TRACKING_URI"]
 EXPERIMENT_NAME = "Iris_MultiModel_Training"
 REGISTERED_MODEL_NAME = "IrisBestModel"
 
 mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-mlflow.set_registry_uri("file:./mlruns")
+mlflow.set_registry_uri(os.environ["MLFLOW_REGISTRY_URI"])
 mlflow.set_experiment(EXPERIMENT_NAME)
 
 
@@ -81,9 +83,6 @@ def train_and_evaluate():
         },
     }
 
-    # ----------------------------
-    # TRACK BEST MODEL
-    # ----------------------------
     best_model = None
     best_score = -1
     best_model_name = ""
@@ -110,8 +109,8 @@ def train_and_evaluate():
                 mlflow.log_param("train_size", len(train))
                 mlflow.log_param("test_size", len(test))
 
-                # ✅ Log model (without deprecated argument)
-                mlflow.sklearn.log_model(model, model_name)
+                # ✅ Log model safely (no deprecated artifact_path)
+                mlflow.sklearn.log_model(model, artifact_path=f"models/{model_name}")
 
                 print(f"Trained {model_name} with {param_set}, Accuracy={acc:.4f}")
 
@@ -127,7 +126,7 @@ def train_and_evaluate():
     # ----------------------------
     print(f"\n✅ Best model: {best_model_name} (Accuracy={best_score:.4f})")
 
-    model_uri = f"runs:/{best_run_id}/{best_model_name}"
+    model_uri = f"runs:/{best_run_id}/models/{best_model_name}"
 
     try:
         mlflow.register_model(model_uri=model_uri, name=REGISTERED_MODEL_NAME)

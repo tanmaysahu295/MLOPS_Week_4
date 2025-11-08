@@ -56,7 +56,7 @@ jobs:
       # ✅ Check model artifact exists
       - name: Check model artifact exists
         run: |
-          if [ ! -f "artifacts/model.joblib" ]; then
+          if [ ! -f "artifacts/model_1.joblib" ]; then
             echo "❌ Model artifact missing!"
             ls -la artifacts
             exit 1
