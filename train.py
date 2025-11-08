@@ -111,7 +111,7 @@ def train_and_evaluate():
                 mlflow.log_param("test_size", len(test))
 
                 # ✅ Log model (without deprecated argument)
-                mlflow.sklearn.log_model(model, model_name)
+                mlflow.sklearn.log_model(model, artifact_path=f"models/{model_name}")
 
                 print(f"Trained {model_name} with {param_set}, Accuracy={acc:.4f}")
 

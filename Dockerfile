@@ -18,8 +18,8 @@ RUN pip install --upgrade pip && \
 
 # Copy only required app files (not whole repo)
 COPY app.py .
-COPY data/artifacts/model_1.joblib ./data/artifacts/model_1.joblib
-COPY data/data_iris/iris.csv ./data/data_iris/iris.csv
+COPY artifacts/model_1.joblib ./artifacts/model_1.joblib
+COPY data/iris.csv ./data/iris.csv
 
 # Expose port
 ENV PORT=8080
