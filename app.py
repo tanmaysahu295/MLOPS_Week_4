@@ -4,7 +4,7 @@ import joblib
 import pandas as pd
 import os
 
-MODEL_PATH = os.getenv("MODEL_PATH", "data/artifacts/model_1.joblib")
+MODEL_PATH = os.getenv("MODEL_PATH", "artifacts/model_1.joblib")
 
 app = FastAPI(title="Iris Classifier API")
 
