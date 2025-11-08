@@ -110,8 +110,8 @@ jobs:
           echo "Deploying image: ${IMAGE_TAG}"
 
           echo "🔄 Applying deployment and service manifests..."
-          kubectl apply -f k8s/deployment.yml
-          kubectl apply -f k8s/service.yml
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml
 
           echo "🚀 Updating image in deployment..."
           kubectl set image deployment/iris-api iris-api=${IMAGE_TAG} --record || true
