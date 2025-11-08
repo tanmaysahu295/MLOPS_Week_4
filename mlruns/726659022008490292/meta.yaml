@@ -1,6 +1,0 @@
-artifact_location: file:///home/sahu_tanmay2104/iris_pipeline/mlruns/726659022008490292
-creation_time: 1761842504548
-experiment_id: '726659022008490292'
-last_update_time: 1761842504548
-lifecycle_stage: active
-name: Iris_MultiModel_Training

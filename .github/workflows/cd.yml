@@ -38,6 +38,11 @@ jobs:
           else
             echo "DVC not configured, using dataset from repo."
           fi
+      - name: Clean old MLflow runs
+        run: |
+          rm -rf mlruns artifacts
+          mkdir -p mlruns artifacts
+
 
       # 🧠 Run model training
       - name: Run model training
