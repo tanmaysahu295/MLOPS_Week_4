@@ -108,15 +108,35 @@ jobs:
         run: |
           IMAGE_TAG=${{ env.IMAGE_BASE }}:v${{ github.run_number }}
           echo "Deploying image: ${IMAGE_TAG}"
+
+          echo "🔄 Applying deployment and service manifests..."
+          kubectl apply -f k8s/deployment.yml
+          kubectl apply -f k8s/service.yml
+
+          echo "🚀 Updating image in deployment..."
           kubectl set image deployment/iris-api iris-api=${IMAGE_TAG} --record || true
+
+          echo "⏳ Waiting for rollout to complete..."
           kubectl rollout status deployment/iris-api
 
+          echo "⚙️ Checking if HPA exists..."
+          if ! kubectl get hpa iris-api-hpa >/dev/null 2>&1; then
+            echo "🆕 HPA not found — creating new autoscaler..."
+            kubectl apply -f k8s/hpa.yml
+          else
+            echo "✅ HPA already exists — updating configuration..."
+            kubectl apply -f k8s/hpa.yml
+          fi
+
+          echo "🔍 Verifying HPA status..."
+          kubectl get hpa iris-api-hpa || echo "⚠️ Could not fetch HPA status."
+
       # 🧩 Apply manifests if first-time deployment
-      - name: Apply manifests (if needed)
-        if: failure()
-        run: |
-          kubectl apply -f k8s/deployment.yaml
-          kubectl apply -f k8s/service.yaml
-          kubectl apply -f k8s/hpa.yml
+      # - name: Apply manifests (if needed)
+      #   if: failure()
+      #   run: |
+      #     kubectl apply -f k8s/deployment.yaml
+      #     kubectl apply -f k8s/service.yaml
+      #     kubectl apply -f k8s/hpa.yml
           
-          kubectl rollout status deployment/iris-api
+      #     kubectl rollout status deployment/iris-api
