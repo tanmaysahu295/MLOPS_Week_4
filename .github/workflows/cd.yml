@@ -117,4 +117,6 @@ jobs:
         run: |
           kubectl apply -f k8s/deployment.yaml
           kubectl apply -f k8s/service.yaml
+          kubectl apply -f k8s/hpa.yml
+          
           kubectl rollout status deployment/iris-api

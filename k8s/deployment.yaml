@@ -13,6 +13,11 @@ spec:
     metadata:
       labels:
         app: iris-api
+        tier: backend
+        version: v1
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
     spec:
       containers:
         - name: iris-api
@@ -21,13 +26,14 @@ spec:
           ports:
             - containerPort: 8080
 
+          # ✅ Define requests & limits (used by the HPA metrics)
           resources:
             requests:
-              memory: "256Mi"
               cpu: "250m"
+              memory: "256Mi"
             limits:
-              memory: "1Gi"
               cpu: "500m"
+              memory: "1Gi"
 
           readinessProbe:
             httpGet:
