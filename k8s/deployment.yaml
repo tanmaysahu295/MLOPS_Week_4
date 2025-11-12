@@ -29,8 +29,8 @@ spec:
           # ✅ Define requests & limits (used by the HPA metrics)
           resources:
             requests:
-              cpu: "250m"
-              memory: "256Mi"
+              cpu: "100m"
+              memory: "128Mi"
             limits:
               cpu: "500m"
               memory: "1Gi"
