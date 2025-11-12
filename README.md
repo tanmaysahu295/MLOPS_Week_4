@@ -30,33 +30,26 @@ iris_pipeline/
 
 ### 🚀 Core Pipeline & Configuration
 
-*   **`dvc.yaml`**: This is the heart of the DVC pipeline. It defines the stages of our ML workflow (`train`, `test`), their dependencies (scripts, data, parameters), and their outputs (model artifacts, logs). This file ensures that the pipeline is reproducible.
-
-*   **`params.yaml`**: A centralized configuration file for all parameters used in the pipeline. This includes data paths, data split ratios, model hyperparameters, and MLflow tracking information. Separating parameters from code allows for easy experimentation without modifying the source code.
-
-*   **`train.py`**: The Python script responsible for the model training stage. It loads data, splits it, trains a model based on the hyperparameters in `params.yaml`, and saves the final model artifact. It also integrates with MLflow to log parameters, metrics, and the model.
-
-*   **`test.py`**: This script performs a sanity check or evaluation on the trained model. It loads the model artifact produced by the `train` stage and runs a simple test, creating a `sanity_check.log` upon successful completion.
+*   **`dvc.yaml`**: Defines the stages of the ML workflow (`train`, `test`) and ensures reproducibility.
+*   **`params.yaml`**: Centralized configuration for all pipeline parameters.
+*   **`train.py`**: Trains the model and logs metrics via MLflow.
+*   **`test.py`**: Performs a sanity check on the trained model and logs the result.
 
 ### ⚙️ CI/CD
 
-*   **`.github/workflows/ci.yml`**: The main Continuous Integration workflow for GitHub Actions. This workflow automates the process of testing the pipeline on every push or pull request. It checks out the code, sets up Python, installs dependencies, pulls DVC-tracked data, runs the full pipeline with `dvc repro`, and verifies the output.
-
-*   **`.github/workflows/pythonapp.yml`**: An older or alternative CI workflow. It performs a more basic check by installing dependencies and running the `test.py` script directly, without executing the full DVC pipeline.
+*   **`.github/workflows/ci.yml`**: Automates the testing pipeline using GitHub Actions.
+*   **`.github/workflows/pythonapp.yml`**: Alternate workflow for dependency and test validation.
 
 ### 📦 Data and Artifacts
 
-*   **`data/data_iris/iris.csv`**: The raw dataset used for training and testing the model. This file is typically tracked by DVC.
-
-*   **`data/artifacts/model_1.joblib`**: The output of the `train` stage. This is the serialized, trained machine learning model. This artifact is an output of the DVC pipeline and is also tracked by DVC.
-
-*   **`logs/sanity_check.log`**: The output of the `test` stage. The presence and content of this file indicate whether the sanity check on the model passed successfully.
+*   **`data/data_iris/iris.csv`**: Raw dataset.
+*   **`data/artifacts/model_1.joblib`**: Trained model artifact.
+*   **`logs/sanity_check.log`**: Indicates successful model validation.
 
 ### 📋 Dependencies & Tracking
 
-*   **`requirements.txt`**: A standard Python file that lists all the project dependencies (e.g., `scikit-learn`, `pandas`, `dvc`, `mlflow`). This ensures that anyone can replicate the environment by running `pip install -r requirements.txt`.
-
-*   **`mlruns/`**: The default directory created by MLflow to store experiment tracking data, including parameters, metrics, and artifacts for each run. This directory is typically added to `.gitignore`.
+*   **`requirements.txt`**: Lists all dependencies (e.g., `scikit-learn`, `pandas`, `dvc`, `mlflow`).
+*   **`mlruns/`**: Directory for MLflow experiment tracking.
 
 ## How to Run
 
@@ -71,7 +64,7 @@ iris_pipeline/
     pip install -r requirements.txt
     ```
 
-3.  **Pull DVC-tracked data (if a remote is configured):**
+3.  **Pull DVC-tracked data (if configured):**
     ```bash
     dvc pull
     ```
@@ -81,4 +74,16 @@ iris_pipeline/
     dvc repro
     ```
 
-This will execute the stages defined in `dvc.yaml` in the correct order, regenerating the model and log files.
+---
+
+## 🧠 Stress Testing and Auto-Scaling
+
+To ensure the deployed `iris-api` service performs well under varying loads, **stress testing** and **auto-scaling** were configured and validated:
+
+- The application is deployed on **Google Kubernetes Engine (GKE)** using a **LoadBalancer Service** and a **Horizontal Pod Autoscaler (HPA)**.  
+- **HPA** automatically scales the number of pods between **1 and 3 replicas** based on CPU usage metrics.
+- Stress tests are executed using tools like **`wrk`**, simulating high concurrency (e.g., 1000+ requests).
+- During load testing:
+  - The **HPA** increases pod count dynamically to handle load.
+  - After the load subsides, pods scale back down automatically.
+- This setup ensures the API remains **responsive, fault-tolerant, and cost-efficient** during heavy traffic.
