@@ -17,14 +17,14 @@ spec:
         version: v1
       annotations:
         prometheus.io/scrape: "true"
-        prometheus.io/port: "8080"
+        prometheus.io/port: "5000"
     spec:
       containers:
         - name: iris-api
           image: asia-south1-docker.pkg.dev/test-proj-475610/iris-repo/iris-api:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 5000
 
           # ✅ Define requests & limits (used by the HPA metrics)
           resources:
@@ -38,13 +38,13 @@ spec:
           readinessProbe:
             httpGet:
               path: /health
-              port: 8080
+              port: 5000
             initialDelaySeconds: 5
             periodSeconds: 10
 
           livenessProbe:
             httpGet:
               path: /health
-              port: 8080
+              port: 5000
             initialDelaySeconds: 10
             periodSeconds: 20
