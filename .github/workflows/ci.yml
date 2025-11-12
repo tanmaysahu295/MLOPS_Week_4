@@ -2,9 +2,9 @@ name: CI - Iris Pipeline
 
 on:
   push:
-    branches: [ "main", "dev", "master" ]
+    branches: [ ]
   pull_request:
-    branches: [ "main", "dev", "master" ]
+    branches: [ ]
 
 jobs:
   run-pipeline:
