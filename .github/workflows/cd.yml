@@ -128,8 +128,16 @@ jobs:
             kubectl apply -f k8s/hpa.yml
           fi
 
-          echo "🔍 Verifying HPA status..."
+          echo "🔍 Initial HPA status (before load)..."
           kubectl get hpa iris-api-hpa || echo "⚠️ Could not fetch HPA status."
+
+          echo "⏳ Waiting 60 seconds to observe autoscaling..."
+          sleep 60
+
+          echo "🔎 Checking current pods and scaling..."
+          kubectl get pods -o wide
+          kubectl describe hpa iris-api-hpa | grep -E "Target|Desired|Current|Events"
+
 
       # 🧩 Apply manifests if first-time deployment
       # - name: Apply manifests (if needed)
