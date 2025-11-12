@@ -22,8 +22,8 @@ COPY artifacts/model_1.joblib ./artifacts/model_1.joblib
 COPY data/iris.csv ./data/iris.csv
 
 # Expose port
-ENV PORT=8080
-EXPOSE 8080
+ENV PORT=5000
+EXPOSE 5000
 
 # Run API
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "5000"]
