@@ -2,7 +2,7 @@ name: CD - Train, Build & Deploy to GKE
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main","week_7"]
 
 env:
   IMAGE_BASE: ${{ secrets.LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/${{ secrets.ARTIFACT_REPO }}/iris-api
