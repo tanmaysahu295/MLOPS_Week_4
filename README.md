@@ -1,29 +1,14 @@
- Iris Dataset Poisoning Experiment — MLflow Tracked Pipeline
-This project performs a controlled data poisoning experiment on the Iris dataset to measure how ML model performance degrades under various types and severities of poisoning.
-Both feature-noise poisoning and label-flip poisoning are introduced at multiple fractions, and the entire training pipeline is tracked using MLflow.
-
-🧪 1. Objective
+## 1. Objective
 The goal of this experiment is to:
+- Demonstrate how data poisoning affects model performance
+- Compare feature corruption vs label corruption
+- Track all runs using MLflow experiments
+- Study how accuracy and metrics decay at poison levels: 5%, 10%, 50%
+- Understand defenses and how data quantity requirements change when quality is degraded
 
-
-Demonstrate how data poisoning affects model performance
-
-
-Compare feature corruption vs label corruption
-
-
-Track all runs using MLflow experiments
-
-
-Study how accuracy and metrics decay at poison levels: 5%, 10%, 50%
-
-
-Understand defenses and how data quantity requirements change when quality is degraded
-
-
-
-📂 2. Project Structure
-bashCopy code├── train.py                    # Main experiment & poisoning pipeline
+ ##2. Project Structure
+'''bash
+├── train.py                    # Main experiment & poisoning pipeline
 ├── test.py                     # MLflow-based sanity test (loads latest model)
 ├── data_iris/
 │   └── iris.csv                # Dataset
@@ -33,6 +18,7 @@ bashCopy code├── train.py                    # Main experiment & poisoning
 │   └── accuracy_vs_poison.png
 ├── mlruns/                     # MLflow experiment logs
 └── README.md
+,,,
 
 
 🧩 3. Poisoning Types Implemented
