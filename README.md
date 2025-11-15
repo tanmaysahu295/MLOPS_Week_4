@@ -7,7 +7,7 @@ The goal of this experiment is to:
 - Understand defenses and how data quantity requirements change when quality is degraded
 
 # 2. Project Structure
-'''
+```
 ├── train.py                    # Main experiment & poisoning pipeline
 ├── test.py                     # MLflow-based sanity test (loads latest model)
 ├── data_iris/
@@ -18,7 +18,7 @@ The goal of this experiment is to:
 │   └── accuracy_vs_poison.png
 ├── mlruns/                     # MLflow experiment logs
 └── README.md
-'''
+```
 
 # 3. Poisoning Types Implemented
   ## A. Feature-Noise Poisoning
