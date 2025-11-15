@@ -103,11 +103,11 @@ def train_and_log(df, poison_type, poison_fraction, run_name=None):
 
     # os.environ["HOME"] = os.getcwd()
     # os.environ["MLFLOW_TRACKING_URI"] = "file:./mlruns"
-    os.environ["MLFLOW_ARTIFACT_ROOT"] = os.path.join(os.getcwd(), "artifacts")
+    # os.environ["MLFLOW_ARTIFACT_ROOT"] = os.path.join(os.getcwd(), "artifacts")
 
-    os.makedirs(os.environ["MLFLOW_ARTIFACT_ROOT"], exist_ok=True)
+    # os.makedirs(os.environ["MLFLOW_ARTIFACT_ROOT"], exist_ok=True)
 
-    MLFLOW_TRACKING_URI = os.environ["MLFLOW_TRACKING_URI"]
+    # MLFLOW_TRACKING_URI = os.environ["MLFLOW_TRACKING_URI"]
     EXPERIMENT_NAME = "iris_poisoning_experiment"
 
     mlflow.set_tracking_uri("file:mlruns")

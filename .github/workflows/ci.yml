@@ -1,67 +1,51 @@
-name: Iris Poisoning CI
+name: Run Poisoning Experiment
 
 on:
   push:
-    branches: [ "week_8" ]
- 
+    branches: ["week_8"]
+  pull_request:
+  workflow_dispatch:
+
 jobs:
-  run-tests:
+  run-experiment:
     runs-on: ubuntu-latest
 
     steps:
-      # -------------------------------
-      # CHECKOUT REPO
-      # -------------------------------
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      # -------------------------------
-      # SETUP PYTHON
-      # -------------------------------
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
 
-      # -------------------------------
-      # CACHE PIP DEPENDENCIES
-      # -------------------------------
-      - name: Cache pip
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        # In case you do not have a requirements file:
+        # pip install pandas scikit-learn joblib mlflow matplotlib numpy
 
-      # -------------------------------
-      # INSTALL DEPENDENCIES
-      # -------------------------------
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install mlflow "scikit-learn" pandas matplotlib joblib
+    - name: Clean and Create directories
+      run: |
+        rm -rf mlruns artifacts poison_experiments
+        mkdir -p mlruns
+        mkdir -p poison_experiments
 
-      # -------------------------------
-      # RUN TRAINING (This creates MLflow experiment)
-      # -------------------------------
-      - name: Run Poisoning Training
-        run: |
-          python train.py
+    - name: Run poisoning experiment
+      run: |
+        python train.py
 
-      # -------------------------------
-      # RUN TEST SCRIPT (Loads latest MLflow model)
-      # -------------------------------
-      - name: Run MLflow sanity check
-        run: |
-          python test.py iris_poisoning_experiment
+    # Upload MLflow run results (models, metrics, artifacts)
+    - name: Upload MLflow artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: mlflow-runs
+        path: mlruns
 
-      # -------------------------------
-      # OPTIONAL: UPLOAD ARTIFACTS
-      # -------------------------------
-      - name: Upload MLflow Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: mlflow-artifacts
-          path: ./mlruns
+    # Upload experiment outputs (plots, CSV, joblib models)
+    - name: Upload experiment outputs
+      uses: actions/upload-artifact@v4
+      with:
+        name: poisoning-results
+        path: poison_experiments
