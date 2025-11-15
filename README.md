@@ -104,20 +104,20 @@ poison_typepoison_fractionaccuracyprecisionrecallf1
 📈 accuracy_vs_poison.png
 Graph showing accuracy decay as poisoning increases.
 
- 8. Expected Observations
-✔ Feature-Noise Poisoning
+# 8. Expected Observations
+## 1. Feature-Noise Poisoning
  At 5%, model accuracy drops slightly
  At 10%, noticeable performance degradation
  At 50%, model becomes nearly unusable
  Feature corruption makes input distribution unstable → unpredictable splits → poor generalization.
 
-✔ Label-Flip Poisoning
-Much more harmful than feature noise
-
-Even 5% label flips strongly reduce accuracy
-
-50% flips → model becomes random guesser
-Label noise directly disrupts decision boundaries.
+## 2. Label-Flip Poisoning
+ Much more harmful than feature noise
+ 
+ Even 5% label flips strongly reduce accuracy
+ 
+ 50% flips → model becomes random guesser
+ Label noise directly disrupts decision boundaries.
 
 
 
