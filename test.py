@@ -1,6 +1,7 @@
 import mlflow
 import numpy as np
 import sys
+import pandas as pd
 
 def run_sanity_check(experiment_name="iris_poisoning_experiment"):
     """
@@ -32,7 +33,12 @@ def run_sanity_check(experiment_name="iris_poisoning_experiment"):
         raise AssertionError(f"❌ Failed to load the model: {e}")
 
     # --------------- Prediction Check -------------
-    sample_input = np.array([5.1, 3.5, 1.4, 0.2])   
+    sample_input = pd.DataFrame([{
+        "sepal_length": 5.1,
+        "sepal_width": 3.5,
+        "petal_length": 1.4,
+        "petal_width": 0.2
+    }])
 
     try:
         prediction = model.predict(sample_input)[0]
