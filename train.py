@@ -98,6 +98,8 @@ def train_and_log(df, poison_type, poison_fraction, run_name=None):
     prec = metrics.precision_score(y_test, preds, average='macro', zero_division=0)
     rec = metrics.recall_score(y_test, preds, average='macro', zero_division=0)
     f1 = metrics.f1_score(y_test, preds, average='macro', zero_division=0)
+
+    mlflow.set_tracking_uri("file:./mlruns")
     mlflow.set_experiment("iris_poisoning_experiment")
     # MLflow logging (local file store by default)
     with mlflow.start_run(run_name=run_name):
@@ -109,11 +111,15 @@ def train_and_log(df, poison_type, poison_fraction, run_name=None):
         mlflow.log_metric("recall_macro", rec)
         mlflow.log_metric("f1_macro", f1)
 
+        mlflow.sklearn.log_model(model, artifact_path="model")
+
         # save model artifact
+        #model_path = os.path.join(OUTPUT_DIR, f"model_{poison_type}_{int(poison_fraction*100)}.joblib")
+        os.makedirs(OUTPUT_DIR, exist_ok=True)
         model_path = os.path.join(OUTPUT_DIR, f"model_{poison_type}_{int(poison_fraction*100)}.joblib")
         joblib.dump(model, model_path)
         mlflow.log_artifact(model_path)
-        mlflow.sklearn.log_model(model, artifact_path="model")
+        
         model_path = f"runs:/{mlflow.active_run().info.run_id}/model"
 
     return {"poison_type": poison_type,
