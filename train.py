@@ -99,6 +99,8 @@ def train_and_log(df, poison_type, poison_fraction, run_name=None):
     rec = metrics.recall_score(y_test, preds, average='macro', zero_division=0)
     f1 = metrics.f1_score(y_test, preds, average='macro', zero_division=0)
 
+    TRACKING_DIR = os.path.abspath("./mlruns")
+    os.makedirs(TRACKING_DIR, exist_ok=True)
     mlflow.set_tracking_uri("file:./mlruns")
     mlflow.set_experiment("iris_poisoning_experiment")
     # MLflow logging (local file store by default)
