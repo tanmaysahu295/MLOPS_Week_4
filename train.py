@@ -101,8 +101,8 @@ def train_and_log(df, poison_type, poison_fraction, run_name=None):
     rec = metrics.recall_score(y_test, preds, average='macro', zero_division=0)
     f1 = metrics.f1_score(y_test, preds, average='macro', zero_division=0)
 
-    os.environ["HOME"] = os.getcwd()
-    os.environ["MLFLOW_TRACKING_URI"] = "file:./mlruns"
+    # os.environ["HOME"] = os.getcwd()
+    # os.environ["MLFLOW_TRACKING_URI"] = "file:./mlruns"
     os.environ["MLFLOW_ARTIFACT_ROOT"] = os.path.join(os.getcwd(), "artifacts")
 
     os.makedirs(os.environ["MLFLOW_ARTIFACT_ROOT"], exist_ok=True)
@@ -110,8 +110,8 @@ def train_and_log(df, poison_type, poison_fraction, run_name=None):
     MLFLOW_TRACKING_URI = os.environ["MLFLOW_TRACKING_URI"]
     EXPERIMENT_NAME = "iris_poisoning_experiment"
 
-    mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-    mlflow.set_registry_uri("file:./mlruns")
+    mlflow.set_tracking_uri("file:mlruns")
+    mlflow.set_registry_uri("file:mlruns")
     mlflow.set_experiment(EXPERIMENT_NAME)
     # MLflow logging (local file store by default)
     with mlflow.start_run(run_name=run_name):
@@ -122,7 +122,7 @@ def train_and_log(df, poison_type, poison_fraction, run_name=None):
         mlflow.log_metric("precision_macro", prec)
         mlflow.log_metric("recall_macro", rec)
         mlflow.log_metric("f1_macro", f1)
-        
+
         signature = infer_signature(X_train, model.predict(X_train))
         input_example = X_train.iloc[:1]
 
