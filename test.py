@@ -32,7 +32,7 @@ def run_sanity_check(experiment_name="iris_poisoning_experiment"):
         raise AssertionError(f"❌ Failed to load the model: {e}")
 
     # --------------- Prediction Check -------------
-    sample_input = np.array([[5.1, 3.5, 1.4, 0.2]])   
+    sample_input = np.array([5.1, 3.5, 1.4, 0.2])   
 
     try:
         prediction = model.predict(sample_input)[0]

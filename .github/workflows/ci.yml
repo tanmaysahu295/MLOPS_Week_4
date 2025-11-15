@@ -37,6 +37,17 @@ jobs:
         python train.py
 
     # Upload MLflow run results (models, metrics, artifacts)
+    - name: Run Poisoning Training
+        run: |
+          python train.py
+
+    # -------------------------------
+    # RUN TEST SCRIPT (Loads latest MLflow model)
+    # -------------------------------
+    - name: Run MLflow sanity check
+      run: |
+        python test.py iris_poisoning_experiment
+        
     - name: Upload MLflow artifacts
       uses: actions/upload-artifact@v4
       with:
