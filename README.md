@@ -7,7 +7,7 @@ The goal of this experiment is to:
 - Understand defenses and how data quantity requirements change when quality is degraded
 
 # 2. Project Structure
-'''bash
+'''
 ├── train.py                    # Main experiment & poisoning pipeline
 ├── test.py                     # MLflow-based sanity test (loads latest model)
 ├── data_iris/
@@ -18,24 +18,25 @@ The goal of this experiment is to:
 │   └── accuracy_vs_poison.png
 ├── mlruns/                     # MLflow experiment logs
 └── README.md
+'''
 
 # 3. Poisoning Types Implemented
-## A. Feature-Noise Poisoning
-Random numbers replace feature values for a subset of rows.
-arduinoCopy codesepal_length → random value within min–max range
-sepal_width  → random value within min–max range
-
-Fraction poisoned:
-5%, 10%, 50%
-
-## B. Label-Flip Poisoning
-Correct labels are replaced with a random incorrect class.
-Example:
-nginxCopy codesetosa → versicolor
-versicolor → virginica
-
-Fraction poisoned:
-5%, 10%, 50%
+  ## A. Feature-Noise Poisoning
+  Random numbers replace feature values for a subset of rows.
+  arduinoCopy codesepal_length → random value within min–max range
+  sepal_width  → random value within min–max range
+  
+  Fraction poisoned:
+  5%, 10%, 50%
+  
+  ## B. Label-Flip Poisoning
+  Correct labels are replaced with a random incorrect class.
+  Example:
+  nginxCopy codesetosa → versicolor
+  versicolor → virginica
+  
+  Fraction poisoned:
+  5%, 10%, 50%
 
 # 4. Training Process
 ## Each run performs:
@@ -105,19 +106,19 @@ poison_typepoison_fractionaccuracyprecisionrecallf1
 Graph showing accuracy decay as poisoning increases.
 
 # 8. Expected Observations
-## 1. Feature-Noise Poisoning
- At 5%, model accuracy drops slightly
- At 10%, noticeable performance degradation
- At 50%, model becomes nearly unusable
- Feature corruption makes input distribution unstable → unpredictable splits → poor generalization.
-
-## 2. Label-Flip Poisoning
- Much more harmful than feature noise
+ ## 1. Feature-Noise Poisoning
+  At 5%, model accuracy drops slightly
+  At 10%, noticeable performance degradation
+  At 50%, model becomes nearly unusable
+  Feature corruption makes input distribution unstable → unpredictable splits → poor generalization.
  
- Even 5% label flips strongly reduce accuracy
- 
- 50% flips → model becomes random guesser
- Label noise directly disrupts decision boundaries.
+ ## 2. Label-Flip Poisoning
+  Much more harmful than feature noise
+  
+  Even 5% label flips strongly reduce accuracy
+  
+  50% flips → model becomes random guesser
+  Label noise directly disrupts decision boundaries.
 
 
 
