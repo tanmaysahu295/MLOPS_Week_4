@@ -1,0 +1,6 @@
+artifact_location: file:///home/sahu_tanmay2104/iris_week_8/mlruns/195534208921239315
+creation_time: 1763187132034
+experiment_id: '195534208921239315'
+last_update_time: 1763187132034
+lifecycle_stage: active
+name: iris_poisoning_experiment

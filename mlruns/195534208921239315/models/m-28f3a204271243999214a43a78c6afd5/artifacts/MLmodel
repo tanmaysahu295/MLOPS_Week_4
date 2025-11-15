@@ -1,0 +1,22 @@
+artifact_path: file:///home/sahu_tanmay2104/iris_week_8/mlruns/195534208921239315/models/m-28f3a204271243999214a43a78c6afd5/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.3
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.2
+mlflow_version: 3.5.1
+model_id: m-28f3a204271243999214a43a78c6afd5
+model_size_bytes: 2275
+model_uuid: m-28f3a204271243999214a43a78c6afd5
+prompts: null
+run_id: 231d51f3ac26420bac1b4486bb5753f6
+utc_time_created: '2025-11-15 06:34:58.108859'

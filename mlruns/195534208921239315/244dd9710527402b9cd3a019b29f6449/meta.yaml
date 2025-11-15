@@ -1,0 +1,14 @@
+artifact_uri: file:///home/sahu_tanmay2104/iris_week_8/mlruns/195534208921239315/244dd9710527402b9cd3a019b29f6449/artifacts
+end_time: 1763187132655
+entry_point_name: ''
+experiment_id: '195534208921239315'
+lifecycle_stage: active
+run_id: 244dd9710527402b9cd3a019b29f6449
+run_name: label_flip_50pct
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1763187132637
+status: 3
+tags: []
+user_id: sahu_tanmay2104

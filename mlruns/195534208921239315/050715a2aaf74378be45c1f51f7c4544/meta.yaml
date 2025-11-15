@@ -1,0 +1,14 @@
+artifact_uri: file:///home/sahu_tanmay2104/iris_week_8/mlruns/195534208921239315/050715a2aaf74378be45c1f51f7c4544/artifacts
+end_time: 1763188498058
+entry_point_name: ''
+experiment_id: '195534208921239315'
+lifecycle_stage: active
+run_id: 050715a2aaf74378be45c1f51f7c4544
+run_name: baseline_clean
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1763188491945
+status: 3
+tags: []
+user_id: sahu_tanmay2104
