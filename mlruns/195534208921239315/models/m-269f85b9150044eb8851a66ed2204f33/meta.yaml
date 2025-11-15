@@ -1,0 +1,10 @@
+artifact_location: file:///home/sahu_tanmay2104/iris_week_8/mlruns/195534208921239315/models/m-269f85b9150044eb8851a66ed2204f33/artifacts
+creation_timestamp: 1763193668390
+experiment_id: '195534208921239315'
+last_updated_timestamp: 1763193671103
+model_id: m-269f85b9150044eb8851a66ed2204f33
+model_type: null
+name: model
+source_run_id: e7ced3933b0b4dafb70525b51dc72abe
+status: 2
+status_message: null

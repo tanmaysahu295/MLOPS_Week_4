@@ -21,6 +21,8 @@ from sklearn import metrics
 import joblib
 import mlflow
 import matplotlib.pyplot as plt
+from mlflow.models.signature import infer_signature
+
 
 RANDOM_STATE = 42
 np.random.seed(RANDOM_STATE)
@@ -99,10 +101,18 @@ def train_and_log(df, poison_type, poison_fraction, run_name=None):
     rec = metrics.recall_score(y_test, preds, average='macro', zero_division=0)
     f1 = metrics.f1_score(y_test, preds, average='macro', zero_division=0)
 
-    tacking_dir = os.path.abspath("./mlruns")
-    os.makedirs(TRACKING_DIR, exist_ok=True)
-    mlflow.set_tracking_uri(f"file:{tracking_dir}")
-    mlflow.set_experiment("iris_poisoning_experiment")
+    os.environ["HOME"] = os.getcwd()
+    os.environ["MLFLOW_TRACKING_URI"] = "file:./mlruns"
+    os.environ["MLFLOW_ARTIFACT_ROOT"] = os.path.join(os.getcwd(), "artifacts")
+
+    os.makedirs(os.environ["MLFLOW_ARTIFACT_ROOT"], exist_ok=True)
+
+    MLFLOW_TRACKING_URI = os.environ["MLFLOW_TRACKING_URI"]
+    EXPERIMENT_NAME = "iris_poisoning_experiment"
+
+    mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+    mlflow.set_registry_uri("file:./mlruns")
+    mlflow.set_experiment(EXPERIMENT_NAME)
     # MLflow logging (local file store by default)
     with mlflow.start_run(run_name=run_name):
         mlflow.log_param("poison_type", poison_type)
@@ -112,8 +122,11 @@ def train_and_log(df, poison_type, poison_fraction, run_name=None):
         mlflow.log_metric("precision_macro", prec)
         mlflow.log_metric("recall_macro", rec)
         mlflow.log_metric("f1_macro", f1)
+        
+        signature = infer_signature(X_train, model.predict(X_train))
+        input_example = X_train.iloc[:1]
 
-        mlflow.sklearn.log_model(model, artifact_path="model")
+        mlflow.sklearn.log_model(model, name="model",input_example=input_example, signature=signature)
 
         # save model artifact
         #model_path = os.path.join(OUTPUT_DIR, f"model_{poison_type}_{int(poison_fraction*100)}.joblib")

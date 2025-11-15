@@ -1,0 +1,14 @@
+artifact_uri: file:///home/sahu_tanmay2104/iris_week_8/mlruns/195534208921239315/c54b5cf85c1e4e0c92184d93ed1cdcc0/artifacts
+end_time: 1763193373523
+entry_point_name: ''
+experiment_id: '195534208921239315'
+lifecycle_stage: active
+run_id: c54b5cf85c1e4e0c92184d93ed1cdcc0
+run_name: feat_noise_50pct
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1763193370849
+status: 3
+tags: []
+user_id: sahu_tanmay2104
